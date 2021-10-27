@@ -1,0 +1,46 @@
+<!--
+https://docs.djangoproject.com/en/3.1/intro/tutorial04
+/ 
+-->
+<!--
+template for details 
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail.html  
+for  "gettings started with django detailed  comments" see 
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut3.html  
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut4.html  
+-->
+
+
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
+
+<h2>test 20201216 get_context_data()</h2>
+<ul>
+<li>Date: {{ now|date }}</li>
+<li>randomInd: {{ someInt}}</li>
+<li>
+more info at <a href=
+"https://docs.djangoproject.com/en/3.1/ref/class-based-views/generic-display/">
+django doc generic views </a>
+
+</li>
+</ul>
+{% if messages %}
+xxxxxxxxxxxxxx demo message functionality xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+

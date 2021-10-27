@@ -1,0 +1,20 @@
+# this file is  /home/syl1/private/Pgm/djo1/top/polls/urls_tut4.py
+# covers tut4 upp to but not including  generic views
+# for more "gettings started with django "detailed  comments see 
+# this file is  /home/syl1/private/Pgm/djo1/top/polls/urls_tut3.py
+
+# https://docs.djangoproject.com/en/3.1/intro/tutorial03/
+from django.urls import path
+from . import views
+app_name = 'polls'
+urlpatterns = [
+    # ex: /polls/
+    path('', views.index, name='index'),
+    # the 'name' value as called by the {% url %} template tag
+    # ex: /polls/5/
+    path('<int:question_id>/', views.detail, name='detail'),
+    # ex: /polls/5/results/
+    path('<int:question_id>/results/', views.results, name='results'),
+    # ex: /polls/5/vote/
+    path('<int:question_id>/vote/', views.vote, name='vote'),
+]

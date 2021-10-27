@@ -1,0 +1,29 @@
+<!--
+https://docs.djangoproject.com/en/3.1/intro/tutorial01/ 
+-->
+<!--
+the first steps in django  , file with lots of comments
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut1.html
+the  corresponding file  used  in the django project  is
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail.html
+# see also comments in   /home/syl1/private/Pgm/djo1/top/polls/urls_tut3.py
+
+-->
+
+<!--
+The simplest way to specify dynamic content within an HTML template is with double curly brackets, as in the following example:
+
+<p> The interest earned is: {{interest}} </p>
+
+In this sample, the <p> and </p> are normal HTML tags for a paragraph. The text 'The interest earned is' will appear just like with any HTML paragraph.
+
+The double curly brackets are not HTML but scripting code. The term inside, interest, is a placeholder, sort of like the name and address in a form letter.
+
+The string {{interest}} will be replaced when the HTML template is converted into straight HTML that is sent over the network to the user.
+
+-->
+
+
+{{question}}
+
+

@@ -1,0 +1,29 @@
+<!--
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/results.html  
+/ 
+-->
+<!--
+https://docs.djangoproject.com/en/3.1/intro/tutorial04
+template for results
+for  "gettings started with django detailed  comments" see  for example
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut3.html  
+-->
+
+
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+{% if messages %}
+xxxxxxxxxxxxxx demo message functionality xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+

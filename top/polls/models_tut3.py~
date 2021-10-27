@@ -1,0 +1,114 @@
+from django.db import models
+# "gettings started with django "detailed  comments 
+# home/syl1/private/Pgm/djo1/top/polls/models_tut3.py
+# the  corresponding file  used  in the django project  is
+# home/syl1/private/Pgm/djo1/top/polls/models.py
+
+
+# probably big mess to come with python standart datetime 
+# and django time-zone related activities
+import datetime
+from django.utils import timezone
+# Create your models here.
+from django.db import models
+
+
+
+'''
+Related objects reference
+https://docs.djangoproject.com/en/3.1/ref/models/relations/
+class RelatedManager
+A “related manager” is a manager used in a one-to-many or many-to-many related context. 
+this happens  via ForeignKey
+
+
+Creates a new object, saves it and puts it in the related object set. Returns the newly created object: see  q.choice_set.create(
+
+notice that _set refes  a set of object 
+q.choice_set as a set of choiches for a give question 
+and not to the verb to set somtinng!!!!
+
+'''
+
+
+class Question(models.Model):
+    # __str__ methods almost mandatory because divers inclusiv of admin
+    def __str__(self):
+        return self.question_text
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+'''
+((good infor about foreign key))
+https://stackoverflow.com/questions/25386119/whats-the-difference-between-a-onetoone-manytomany-and-a-foreignkey-field-in-d
+
+ForeignKey
+A foreign key relationship is generally known as a many-to-one relationship. Note that the reverse of this relationship is one-to-many (which Django provides tools to access). As the name implies, many objects may be related to one.
+
+Person >--| Birthplace
+   ^           ^
+   |           |
+  Many        One 
+'''
+
+# one Question has  many choices (choice== a valid respons to the question ) therefore
+# the ForeignKey statement is defined  in the Choices class
+'''
+example  using the python shell 
+retrieve a question with the primary key 1
+>>> q = Question.objects.get(pk=1)
+
+create a choice for a given question 
+notice that choice was not defined in the Question class . 
+The relation between question and choice is made in the Choice Class via
+models.Foreignkey(...)
+
+
+
+>>> q.choice_set.create(choice_text='Not much',votes=0)
+
+retrives all the choices associated to one question
+>>> q.choice_set.all()
+'''
+
+
+class Choice(models.Model):
+    # __str__ methods almost mandatory because divers inclusiv of admin
+    def __str__(self):
+        return self.choice_text
+    # to get use to the time business
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+    
+'''
+_set meaning in Django ORM relationship
+
+https://tekshinobi.com/_set-meaning-in-django-many-to-many-relationship/
+_set is associated with reverse relation on a model.
+
+Django allows you to access reverse relations on a model. 
+By default, Django creates a manager (RelatedManager) on your model to handle this, named <model>_set, where <model> is your model name in lowercase.
+
+
+In Django,
+
+“It doesn’t matter which model has the ManyToManyField, but you should only put it in one of the models — not both.”.
+
+So, to get all the companies associated with a User, we can do:
+User.companies.all()
+But the reverse is a bit tricky. That is, how to get all users associated with a company.
+
+Very easy. Get the reverse relationship using _set
+company.user_set.all()
+will return a QuerySet of User objects that belong to a particular company. By default you use modelname_set to reverse the relationship, but you can override this be providing 
+...
+'''
+
+'''
+Whats the difference between a OneToOne, ManyToMany, and a ForeignKey Field in Django?
+https://stackoverflow.com/questions/25386119/whats-the-difference-between-a-onetoone-manytomany-and-a-foreignkey-field-in-d
+'''

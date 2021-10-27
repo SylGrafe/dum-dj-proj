@@ -1,0 +1,50 @@
+<!--
+https://docs.djangoproject.com/en/3.1/intro/tutorial04
+/ 
+-->
+<!--
+template for details 
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail.html  
+for  "gettings started with django detailed  comments" see 
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut3.html  
+
+-->
+
+
+<!--
+ displays a radio button for each question choice.
+ The value of each radio button is the associated question choice’s ID. 
+ The name of each radio button is "choice"
+ forloop.counter indicates how many times the for tag has gone through its loop
+
+ protection agains cross site request forgeries:
+ all POST forms that are targeted at internal URLs should use the  csrf_token template tag.
+-->
+
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
+
+
+<!--
+<form action="{% url 'polls:vote' question.id %}" method="post">
+will send  the content of the post request from to the function  vote() defined in 
+home/syl1/private/Pgm/djo1/top/polls/views.py
+
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+
+
+
+-->

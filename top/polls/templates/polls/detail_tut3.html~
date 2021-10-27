@@ -1,0 +1,56 @@
+<!--
+https://docs.djangoproject.com/en/3.1/intro/tutorial03/ 
+-->
+<!--
+the first steps in django  , file with lots of comments
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut3.html
+the  corresponding file  used  in the django project  is
+/home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail.html
+# see also comments in   /home/syl1/private/Pgm/djo1/top/polls/urls_tut3.py
+# see also comments in /home/syl1/private/Pgm/djo1/top/polls/templates/polls/detail_tut1.html
+
+-->
+
+
+
+<!-- 
+remember that question_text is defined in the Question class
+home/syl1/private/Pgm/djo1/top/polls/modesl.py
+class Question(models.Model):
+    ...
+    question_text = models.CharField(max_length=200)
+-->
+
+<h1>{{ question.question_text }}</h1>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
+
+{%  endcomment %}
+
+
+<!--  temp_quest in  this template refers 
+and py_quest in the python code  refers to the same instance of Question
+
+/home/syl1/private/Pgm/djo1/top/polls/urls_tut3.py
+/home/syl1/private/Pgm/djo1/top/polls/views_tut3.py
+
+
+    py_quest = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/detail.html', {'temp_quest': py_quest})    
+
+-->
+<h1>{{ temp_quest.question_text }}</h1>
+<ul>
+{% for choice in temp_quest.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
+
+/home/syl1/private/Pgm/djo1/top/polls/urls_tut3.py
+/home/syl1/private/Pgm/djo1/top/polls/views_tut3.py
+
